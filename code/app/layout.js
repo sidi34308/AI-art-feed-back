@@ -1,16 +1,15 @@
 import { Inter } from "next/font/google";
-import { IBM_Plex_Sans_Arabic } from "next/font/google"
+import { IBM_Plex_Sans_Arabic } from "next/font/google";
 import Head from "next/head";
 import Header from "./components/Header";
 
-
-
 const iBM_Plex_Sans_Arabic = IBM_Plex_Sans_Arabic({
-  subsets: ['arabic'],
-  weight: ['100', '200', '300', '400', '500', '600', '700']
+  subsets: ["arabic"],
+  weight: ["100", "200", "300", "400", "500", "600", "700"],
 });
 
 import "./globals.css";
+import FootBar from "./components/FooterBar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,8 +25,11 @@ export default function RootLayout({ children }) {
         <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
       </Head>
       <body className={iBM_Plex_Sans_Arabic.className}>
-        <Header />
-        {children}
+        <section className="">
+          <Header />
+          {children}
+          <FootBar />
+        </section>
       </body>
     </html>
   );

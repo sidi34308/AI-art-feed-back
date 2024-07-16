@@ -9,7 +9,7 @@
 }
 
 ::selection {
-  background-color: #CEA333;
+  background-color: #405fd1;
   /* Yellow */
   color: #fff;
   /* Dark gray */
@@ -22,7 +22,9 @@
 .text-right {
   text-align: right;
 }
-
+.paragraph {
+  color: #a8a8a8;
+}
 .gallery-container {
   height: 70vh;
 
@@ -59,7 +61,6 @@
   background-color: #fff;
   /* Thumb color */
   border-radius: 10px;
-
 }
 
 .gallery-container::-webkit-scrollbar-thumb:hover {
@@ -77,9 +78,12 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(to bottom,
+  background: linear-gradient(
+      to bottom,
       transparent,
-      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
 }
 
 @layer utilities {

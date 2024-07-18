@@ -50,11 +50,16 @@ const Feedback = () => {
     setLoading(true);
     setError("");
 
-    const prompt = "Give a feedback on the following image of painting or drawing, say what can be improved, as a paragraph, write in arabic";
+    const prompt =
+      "Give a feedback on the following image of painting or drawing, say what can be improved, as a paragraph, write in arabic";
 
     try {
       const imagePart = await fileToGenerativePart(file);
-      const result = await model.generateContent([{ text: prompt }, { text: description }, imagePart]);
+      const result = await model.generateContent([
+        { text: prompt },
+        { text: description },
+        imagePart,
+      ]);
       const text = result.response.text();
       setLoading(false);
       setResponse(text);
@@ -101,7 +106,10 @@ const Feedback = () => {
 
   return (
     <div className="flex flex-col gap-5 items-center p-2">
-      <h1 className="font-bold text-xl"> احصل على ردود الفعل على الرسم الخاص بك</h1>
+      <h1 className="font-bold text-xl">
+        {" "}
+        احصل على ردود الفعل على الرسم الخاص بك
+      </h1>
       <input
         type="file"
         accept="image/*"
@@ -121,9 +129,15 @@ const Feedback = () => {
         className="border-dashed border-2 border-gray-300 p-4 mb-4 w-full flex justify-center items-center"
       >
         {preview ? (
-          <img src={preview} alt="Image preview" className="max-w-full h-auto" />
+          <img
+            src={preview}
+            alt="Image preview"
+            className="max-w-full h-auto"
+          />
         ) : (
-          <p className="text-gray-400">قم بسحب وإسقاط الصورة هنا، أو انقر لتحديد واحدة</p>
+          <p className="text-gray-400">
+            قم بسحب وإسقاط الصورة هنا، أو انقر لتحديد واحدة
+          </p>
         )}
       </div>
 

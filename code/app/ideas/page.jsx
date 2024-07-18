@@ -14,52 +14,73 @@ const IdeaPage = () => {
     const prompt =
       "Generate one drawing idea, short in one sentence in arabic, make sure it is for a meaningful drawing or painting";
 
-    const response = await fetch("/api/idea", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ prompt }),
-    });
+    try {
+      const response = await fetch("/api/ideas", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ prompt }),
+      });
 
-    const result = await response.json();
-    setIdea(result.idea);
+      if (!response.ok) {
+        throw new Error("Failed to fetch idea");
+      }
+
+      const result = await response.json();
+
+      if (result.idea) {
+        displayIdea(result.idea);
+      } else {
+        console.error("No idea returned in the response");
+      }
+    } catch (error) {
+      console.error("Error fetching idea:", error);
+    }
+
     setLoading(false);
   };
 
+  const displayIdea = (text) => {
+    if (!text) return;
+
+    let index = 0;
+    setIdea(""); // Reset idea before displaying new one
+    const interval = setInterval(() => {
+      setIdea((prev) => prev + text[index - 1]);
+      index++;
+      if (index === text.length) {
+        clearInterval(interval);
+      }
+    }, 100); // Adjust the interval duration as needed
+  };
+
   return (
-    <main className="w-full  relative flex min-h-screen flex-col items-center justify-between p-24 rtl">
-      <section className="w-full flex gap-6 flex-col md:flex-row">
-        <div className="w-full flex flex-col gap-6">
-          <div className="flex flex-col justify-center items-center p-8 bg-zinc-9200 rounded-[15px]  border-zinc-700">
-            <div className="flex flex-col justify-between items-center gap-6">
-              <h2 className="font-bold text-xl">
-                توليد فكرة لوحة باستخدام الذكاء الاصطناعي
-              </h2>
-              <button
-                className="animate-bounce py-2 px-5 flex gap-2 items-center gap-1 bg-zinc-300 rounded-[7px] text-black font-bold hover:bg-zinc-400 h-auto"
-                onClick={fetchIdea}
-              >
-                <h4 className="">اقترح علي فكرة</h4>
-                <img src="/stars.png" className="w-5 " />
-              </button>
-            </div>
-            {loading ? (
-              <img
-                src="/loader.svg"
-                alt="Loading..."
-                className="w-20 justify-center"
-              />
-            ) : (
-              <div className="p-4">{idea}</div>
-            )}
+    <section className="rtl w-full flex flex-col justify-center items-center h-screen bg-black text-white p-8">
+      <div className="p-8 rounded-lg shadow-lg max-w-md w-full">
+        <div className="flex flex-col justify-center items-center gap-6">
+          <h2 className="font-bold text-2xl text-center mb-4">
+            توليد فكرة لوحة باستخدام الذكاء الاصطناعي
+          </h2>
+          <button
+            className="animate-bounce py-3 px-6 flex gap-2 items-center bg-blue-500 rounded-lg text-white font-bold hover:bg-blue-600 transition duration-300 ease-in-out"
+            onClick={fetchIdea}
+          >
+            <h4 className="">اقترح علي فكرة</h4>
+            <img src="/stars.png" className="w-6" />
+          </button>
+        </div>
+        {loading ? (
+          <div className="flex justify-center items-center mt-6">
+            <img src="/loader.svg" alt="Loading..." className="w-16" />
           </div>
-        </div>
-        <div className="w-full">
-          <div className="p-5 bg-zinc-9200 rounded-[15px]  border-zinc-700"></div>
-        </div>
-      </section>
-    </main>
+        ) : (
+          <div className="mt-6 bg-[#181818] p-4 rounded-xl">
+            <p className="text-lg text-center">{idea}</p>
+          </div>
+        )}
+      </div>
+    </section>
   );
 };
 

@@ -54,18 +54,56 @@ const FeedbackPage = () => {
     setShowDropdown(false);
   };
 
-  const handleFileUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setSelectedImage(URL.createObjectURL(file));
-      setImageFile(file); // Store the actual file
+  // const handleFileUpload = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     setSelectedImage(URL.createObjectURL(file));
+  //     setImageFile(file); // Store the actual file
+  //   }
+  // };
+  const handleDrop = (event) => {
+    event.preventDefault();
+    const selectedFile = event.dataTransfer.files[0];
+    const allowedTypes = ["image/jpeg", "image/png", "image/jpg", "image/webp"];
+    if (selectedFile && allowedTypes.includes(selectedFile.type)) {
+      setFile(selectedFile);
+    } else {
+      alert("Please select a valid image file");
     }
+  };
+
+  const handleDragOver = (event) => {
+    event.preventDefault();
   };
 
   const handleRemoveImage = () => {
     setSelectedImage(null);
     setImageFile(null); // Clear the stored file
     document.getElementById("fileInput").value = "";
+  };
+
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+    const allowedTypes = ["image/jpeg", "image/png", "image/jpg", "image/webp"];
+    if (selectedFile && allowedTypes.includes(selectedFile.type)) {
+      setImageFile(selectedFile);
+    } else {
+      alert("Please select a valid image file");
+      event.target.value = null;
+    }
+  };
+  const displayFeedback = (text) => {
+    if (!text) return;
+
+    let index = 0;
+    setFeedback(""); // Reset idea before displaying new one
+    const interval = setInterval(() => {
+      setFeedback((prev) => prev + text[index - 1]);
+      index++;
+      if (index === text.length) {
+        clearInterval(interval);
+      }
+    }, 100); // Adjust the interval duration as needed
   };
 
   const handleSubmit = async () => {
@@ -78,9 +116,9 @@ const FeedbackPage = () => {
     setLoading(true);
 
     try {
-      const formData = new FormData();
-      formData.append("image", imagePart);
-      formData.append("tags", tags.join(","));
+      // const formData = new FormData();
+      // formData.append("image", imagePart);
+      // formData.append("tags", tags.join(","));
 
       const response = await fetch("/api/feedback", {
         method: "POST",
@@ -92,7 +130,7 @@ const FeedbackPage = () => {
       }
 
       const result = await response.json();
-      setFeedback(result.feedback);
+      displayFeedback(result.feedback);
     } catch (error) {
       console.error("Error fetching feedback:", error);
       alert("Error fetching feedback. Please try again.");
@@ -102,7 +140,7 @@ const FeedbackPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black text-white p-8">
+    <div className="min-h-screen mt-20 flex items-center justify-center bg-black text-white p-8">
       <div className="max-w-2xl w-full">
         <h1 className="text-3xl font-bold mb-2 flex gap-2">
           Feedback <span className="text-[#405fd1]">using AI</span>
@@ -141,7 +179,7 @@ const FeedbackPage = () => {
             id="fileInput"
             className="hidden"
             accept="image/*"
-            onChange={handleFileUpload}
+            onChange={handleFileChange}
           />
           {selectedImage ? (
             <div className="relative">
@@ -165,37 +203,55 @@ const FeedbackPage = () => {
                 viewBox="0 0 44 44"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <g clipPath="url(#clip0_358_304)">
-                  <path d="M44 27.5V34.8333C44 39.8878 39.8878 44 34.8333 44H9.16667C4.11217 44 0 39.8878 0 34.8333V27.5C0 24.4677 2.46767 22 5.5 22H11C13.0222 22 14.6667 23.6445 14.6667 25.6667C14.6667 27.6888 16.3112 29.3333 18.3333 29.3333H25.6667C27.6888 29.3333 29.3333 27.6888 29.3333 25.6667C29.3333 23.6445 30.9778 22 33 22H38.5C41.5323 22 44 24.4677 44 27.5ZM22 13.75C22 15.5404 20.5404 17 18.75 17C16.9596 17 15.5 15.5404 15.5 13.75C15.5 11.9596 16.9596 10.5 18.75 10.5C20.5404 10.5 22 11.9596 22 13.75Z" />
+                <g clip-path="url(#clip0_358_304)">
+                  <path d="M44 27.5V34.8333C44 39.8878 39.8878 44 34.8333 44H9.16667C4.11217 44 0 39.8878 0 34.8333V27.5C0 24.4677 2.46767 22 5.5 22H11C13.0222 22 14.6667 23.6445 14.6667 25.6667C14.6667 27.6888 16.3112 29.3333 18.3333 29.3333H25.6667C27.6888 29.3333 29.3333 27.6888 29.3333 25.6667C29.3333 23.6445 30.9778 22 33 22H38.5C41.5323 22 44 24.4677 44 27.5ZM15.9628 9.70383L20.1667 5.5V18.3333C20.1667 19.3472 20.9862 20.1667 22 20.1667C23.0138 20.1667 23.8333 19.3472 23.8333 18.3333V5.5L28.0372 9.70383C28.3947 10.0613 28.864 10.241 29.3333 10.241C29.8027 10.241 30.272 10.0613 30.6295 9.70383C31.3463 8.987 31.3463 7.82833 30.6295 7.1115L24.5923 1.07433C23.8847 0.366667 22.9552 0.011 22.0257 0.0055L22 0L21.9743 0.0055C21.043 0.011 20.1153 0.366667 19.4077 1.07433L13.3705 7.1115C12.6537 7.82833 12.6537 8.987 13.3705 9.70383C14.0873 10.4207 15.246 10.4207 15.9628 9.70383Z" />
                 </g>
+                <defs>
+                  <clipPath id="clip0_358_304">
+                    <rect width="44" height="44" />
+                  </clipPath>
+                </defs>
               </svg>
               <p>Click to upload your artwork</p>
             </>
           )}
         </div>
-        <div className="flex items-center mb-4">
-          <div className="relative w-full">
-            <input
-              type="text"
-              className="bg-[#1e1e1e] text-white rounded-lg w-full py-2 px-4 focus:outline-none focus:ring focus:border-blue-300"
-              placeholder="Add tags (e.g., realistic, portrait)"
-              value={tags.join(", ")}
-              onFocus={() => setShowDropdown(true)}
-              onChange={(e) =>
-                setTags(e.target.value.split(",").map((tag) => tag.trim()))
-              }
-            />
+        <div className="mb-4 flex flex-wrap">
+          {tags.map((tag, index) => (
+            <span
+              key={index}
+              className="bg-[#3753B8] text-white px-3 py-1 rounded-full mr-2 mb-2 flex items-center"
+            >
+              {tag}
+              <button
+                className="ml-2 text-lg leading-none"
+                onClick={() => handleTagRemove(tag)}
+              >
+                &times;
+              </button>
+            </span>
+          ))}
+          <div className="relative">
+            <button
+              className="bg-gray-700 text-white px-3 py-1 rounded-full mb-2"
+              onClick={() => setShowDropdown(!showDropdown)}
+            >
+              +
+            </button>
             {showDropdown && (
-              <div className="absolute left-0 mt-1 w-full bg-[#1e1e1e] rounded-lg shadow-lg py-1">
-                {availableTags.map((tag) => (
-                  <div
-                    key={tag}
-                    className="cursor-pointer px-3 py-1 hover:bg-[#0c0c0c]"
-                    onClick={() => handleTagAdd(tag)}
-                  >
-                    {tag}
-                  </div>
-                ))}
+              <div className="absolute mt-2 w-48 bg-white rounded-md shadow-lg z-10">
+                {availableTags.map(
+                  (tag, index) =>
+                    !tags.includes(tag) && (
+                      <div
+                        key={index}
+                        className="px-4 py-2 text-gray-700 cursor-pointer hover:bg-gray-200"
+                        onClick={() => handleTagAdd(tag)}
+                      >
+                        {tag}
+                      </div>
+                    )
+                )}
               </div>
             )}
           </div>
@@ -210,9 +266,13 @@ const FeedbackPage = () => {
         {feedback && (
           <div className="mt-6 bg-[#1e1e1e] rounded-lg p-4">
             <h2 className="text-xl font-bold mb-2">AI Feedback</h2>
-            <p>{feedback}</p>
+            <p>
+              {feedback}
+              <span>*</span>
+            </p>
           </div>
         )}
+        <div className="h-40 w-full"></div>
       </div>
     </div>
   );

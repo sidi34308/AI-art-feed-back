@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 
 const FeedbackPage = () => {
-  const [tags, setTags] = useState(["realistic", "Anime", "simple"]);
+  const [tags, setTags] = useState(["realistic", "simple"]);
   const [feedback, setFeedback] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -96,14 +96,14 @@ const FeedbackPage = () => {
     if (!text) return;
 
     let index = 0;
-    setFeedback(""); // Reset idea before displaying new one
+    setFeedback(""); // Reset before displaying new one
     const interval = setInterval(() => {
       setFeedback((prev) => prev + text[index - 1]);
       index++;
       if (index === text.length) {
         clearInterval(interval);
       }
-    }, 100); // Adjust the interval duration as needed
+    }, 50); // Adjust the interval duration as needed
   };
 
   const handleSubmit = async () => {
@@ -139,11 +139,33 @@ const FeedbackPage = () => {
     setLoading(false);
   };
 
+  const FlickeringCircle = () => (
+    <svg width="10" height="10" viewBox="0 0 100 100" className="flicker">
+      <circle cx="50" cy="50" r="50" fill="white" />
+      <style jsx>{`
+        .flicker {
+          animation: flickerAnimation 1.5s infinite;
+        }
+        @keyframes flickerAnimation {
+          0% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0;
+          }
+          100% {
+            opacity: 1;
+          }
+        }
+      `}</style>
+    </svg>
+  );
+
   return (
     <div className="min-h-screen mt-20 flex items-center justify-center bg-black text-white p-8">
       <div className="max-w-2xl w-full">
         <h1 className="text-3xl font-bold mb-2 flex gap-2">
-          Feedback <span className="text-[#405fd1]">using AI</span>
+          Feedback <span className="text-[#5b7cf5]">using AI</span>
           <svg
             className="w-5 h-5"
             viewBox="0 0 46 36"
@@ -167,8 +189,12 @@ const FeedbackPage = () => {
           </svg>
         </h1>
         <p className="mb-6">
-          Get feedback on your artwork with a detailed explanation of your
-          strengths and weaknesses.
+          Upload your artwork and receive constructive feedback highlighting
+          your strengths and areas for improvement.
+        </p>
+        <p className="opacity-50 mb-3">
+          Upload your image: Select an image file (JPEG, PNG, JPG, or WEBP) to
+          get started.
         </p>
         <div
           className="border-2 border-dashed border-gray-600 rounded-lg p-8 mb-4 flex flex-col items-center hover:bg-[#0c0c0c] cursor-pointer"
@@ -216,6 +242,11 @@ const FeedbackPage = () => {
             </>
           )}
         </div>
+        <p className="mb-3">
+          <span className="text-[#5b7cf5] font-bold">Tags</span> Add relevant
+          tags to categorize your artwork and provide context for better
+          feedback.
+        </p>
         <div className="mb-4 flex flex-wrap">
           {tags.map((tag, index) => (
             <span
@@ -257,18 +288,26 @@ const FeedbackPage = () => {
           </div>
         </div>
         <button
-          className="bg-[#405fd1] text-white py-2 px-6 rounded-lg hover:bg-opacity-80 transition duration-300"
+          className={`bg-[#405fd1] ${
+            imageFile ? "opacity-100" : "opacity-35"
+          }  text-white py-2 w-full rounded-lg hover:bg-opacity-80 transition duration-300`}
           onClick={handleSubmit}
-          disabled={loading}
+          disabled={!imageFile}
         >
-          {loading ? "Getting Feedback..." : "Get Feedback"}
+          Get Feed-back
         </button>
         {feedback && (
-          <div className="mt-6 bg-[#1e1e1e] rounded-lg p-4">
-            <h2 className="text-xl font-bold mb-2">AI Feedback</h2>
-            <p>
-              {feedback}
-              <span>*</span>
+          <div className="mt-6 bg-[#0e0e0e] rounded-lg p-4 border-[1px] border-[#323232]">
+            <h2 className="text-xl font-bold mb-2 flex justify-center items-center">
+              AI Feedback
+            </h2>
+
+            {loading ? <img src="/loader.svg" className="w-40 " /> : <></>}
+
+            <p className="flex items-center">
+              <span className="inline-flex items-center">
+                <span className="ml-2">{feedback}</span>
+              </span>
             </p>
           </div>
         )}

@@ -66,7 +66,7 @@ export default function Home() {
   }
 
   return (
-    <main className="w-full  relative flex min-h-screen flex-col items-center justify-between p-24 rtl">
+    <main className="w-full  relative flex min-h-screen flex-col items-center justify-between p-24 ">
       <section className="w-full flex gap-6 flex-col md:flex-row">
         <div className="w-full flex flex-col gap-6">
           <div className="flex flex-col justify-center items-center p-8 bg-zinc-9200 rounded-[15px] border border-zinc-700">

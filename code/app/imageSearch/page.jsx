@@ -46,16 +46,19 @@ const ImagesPage = () => {
     <div className="min-h-screen flex flex-col items-center justify-center bg-black text-white p-8 mt-20">
       <div className="max-w-2xl w-full mb-8">
         <h1 className="text-3xl font-bold mb-2">
-          ابحث عن صور مرجعية <span className="text-blue-500">باستخدام AI</span>
+          Search for Reference Images{" "}
+          <span className="text-blue-500">Using AI</span>
         </h1>
-        <p className="mb-6">احصل على صور مرجعية لأعمالك الفنية القادمة</p>
+
+        <p className="mb-6">Get reference images for your upcoming artwork.</p>
         <input
           type="text"
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
-          placeholder="ادخل وصفا للحصول على صور مرجعية"
+          placeholder="Enter a description to get reference images"
           className="w-full border-[1px] border-[#323232] bg-[#242424] text-white p-4 rounded-2xl mb-4"
         />
+
         <button
           onClick={handleSearch}
           className="w-full bg-[#3753ba] text-white py-2 rounded-2xl hover:bg-[#22357a]"

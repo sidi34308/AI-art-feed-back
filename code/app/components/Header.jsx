@@ -32,7 +32,7 @@ const Header = () => {
         isVisible ? "translate-y-0" : "-translate-y-full"
       }`}
     >
-      <nav className="flex justify-around md:justify-start items-center w-full mb-1 backdrop-blur-[1rem] bg-[#black] bg-opacity-90 border-b border-[#0B0B0B] pl-10 p-3 font-bold">
+      <nav className="flex justify-around md:justify-start items-center w-full mb-1 backdrop-blur-[2rem] bg-[#0c0c0cce] bg-opacity-90 border-b border-[#0B0B0B] pl-10 p-3 font-bold">
         <a className="ml-10 p-2" href="#">
           <img src="/logo.svg" alt="logo" className="w-32 object-contain" />
         </a>

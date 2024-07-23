@@ -225,7 +225,7 @@ const FeedbackPage = () => {
             <>
               <svg
                 className="w-8 h-8 mb-3"
-                fill="#868686"
+                fill="#3753B8"
                 viewBox="0 0 44 44"
                 xmlns="http://www.w3.org/2000/svg"
               >

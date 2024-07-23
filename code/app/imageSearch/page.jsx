@@ -65,24 +65,28 @@ const ImagesPage = () => {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {loading ? (
-          <img src="/loader.svg" alt="Loading..." className="w-20" />
+          <div className="col-span-full flex justify-center items-center">
+            <img src="/loader.svg" alt="Loading..." className="w-20" />
+          </div>
         ) : (
           images.map((image) => (
-            <img
-              key={image.id}
-              src={image.src.large2x}
-              alt={image.alt}
-              className="rounded-lg cursor-pointer"
-              onClick={() => handleImageClick(image)}
-            />
+            <div key={image.id} className="relative">
+              <img
+                src={image.src.large2x}
+                alt={image.alt}
+                className="w-full h-auto rounded-lg cursor-pointer"
+                onClick={() => handleImageClick(image)}
+              />
+            </div>
           ))
         )}
       </div>
+
       {selectedImage && (
         <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
-          <div className="relative bg-gray-800 p-4 rounded-lg">
+          <div className="relative bg-black p-4 rounded-lg">
             <button
-              className="absolute top-2 right-2 text-white"
+              className="absolute top-2 right-2 text-white bg-red-800 py-2 px-4 rounded-full"
               onClick={() => setSelectedImage(null)}
             >
               &times;

@@ -2,7 +2,7 @@ import { Inter } from "next/font/google";
 import { IBM_Plex_Sans_Arabic } from "next/font/google";
 import Head from "next/head";
 import Header from "./components/Header";
-
+import Script from "next/script";
 const iBM_Plex_Sans_Arabic = IBM_Plex_Sans_Arabic({
   subsets: ["arabic"],
   weight: ["100", "200", "300", "400", "500", "600", "700"],
@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <Head>
-        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+        <Script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></Script>
       </Head>
       <body className={iBM_Plex_Sans_Arabic.className}>
         <section className="">

@@ -1,117 +1,143 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { GoogleGenerativeAI } from "@google/generative-ai";
-import FeedBack from "./components/feedBack";
-import Search from "./components/search";
+import Head from "next/head";
+import { useEffect, useRef } from "react";
+import MainNavbar from "./components/mainNavbar";
+import { motion } from "framer-motion";
 
-import Lottie from "lottie-react";
-import animationData from "@/public/ARTIST_S_AI.json";
+const Home = () => {
+  const videoRefs = [useRef(), useRef(), useRef()];
 
-const MODEL_NAME = "gemini-1.0-pro";
-const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
-console.log(API_KEY);
+  useEffect(() => {
+    videoRefs.forEach((ref) => {
+      if (ref.current) {
+        ref.current.play();
+      }
+    });
+  }, []);
 
-export default function Home() {
-  const [count, setCount] = useState(0);
-  const [idea, setIdea] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [keywords, setKeywords] = useState([]);
-
-  const incrementCount = async () => {
-    await fetchIdea();
+  const fadeIn = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0 },
   };
 
-  async function fetchIdea() {
-    setLoading(true);
-    const prompt =
-      "Generate one drawing idea, short in one sentence in arabic,make sure it is for a meaningful drawing or painting";
-    try {
-      const genAI = new GoogleGenerativeAI(API_KEY);
-      const model = genAI.getGenerativeModel({ model: MODEL_NAME });
-
-      const result = await model.generateContent([{ text: prompt }]);
-      const text = result.response.text();
-
-      console.log(text);
-
-      setIdea(text);
-      await lookforKeyWords(text);
-    } catch (err) {
-      console.error("Error while fetching idea:", err);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  async function lookforKeyWords(ideas) {
-    const prompt =
-      "from this idea text give me only list of key words that can be searched for reference images separated by , sign and no space between keywords, make sure the key words are in english do not add key words like, limit the key words to 8";
-    try {
-      const genAI = new GoogleGenerativeAI(API_KEY);
-      const model = genAI.getGenerativeModel({ model: MODEL_NAME });
-
-      const result = await model.generateContent([
-        { text: prompt },
-        { text: ideas },
-      ]);
-      const text = result.response.text();
-      const array = text.split(",");
-
-      console.log(array);
-      setKeywords(array);
-    } catch (err) {
-      console.error("Error while fetching keywords:", err);
-    }
-  }
-
   return (
-    <main className="w-full  relative flex min-h-screen flex-col items-center justify-between p-24 ">
-      <section className="w-full flex gap-6 flex-col md:flex-row">
-        <div className="w-full flex flex-col gap-6">
-          <div className="flex flex-col justify-center items-center p-8 bg-zinc-9200 rounded-[15px] border border-zinc-700">
-            <div className="flex flex-col justify-between items-center gap-6">
-              <h2 className="font-bold text-xl">
-                توليد فكرة لوحة باستخدام الذكاء الاصطناعي
-              </h2>
-              <button
-                className="animate-bounce py-2 px-5 flex items-center gap-1 bg-zinc-300 rounded-[7px] text-black font-bold hover:bg-zinc-400 h-auto"
-                onClick={incrementCount}
-              >
-                <h4 className="w-36">اقترح علي فكرة</h4>
-                <img src="/stars.png" className="w-5 p02" />
-              </button>
-            </div>
-            {loading ? (
-              <img
-                src="/loader.svg"
-                alt="Loading..."
-                className="w-20 justify-center"
-              />
-            ) : (
-              <div className="p-4">{idea}</div>
-            )}
+    <div className="min-h-screen bg-gradient-to-b from-black to-gray-900 text-white">
+      <MainNavbar />
+      <main className="mt-20">
+        <section className="text-center px-20 pt-20">
+          <motion.h1
+            className="text-3xl md:text-5xl font-bold mb-5"
+            initial="hidden"
+            animate="visible"
+            variants={fadeIn}
+            transition={{ duration: 1 }}
+          >
+            Let’s generate ideas <span className="text-blue-600">using AI</span>
+          </motion.h1>
+          <motion.p
+            className="text-md md:text-xl mb-12"
+            initial="hidden"
+            animate="visible"
+            variants={fadeIn}
+            transition={{ delay: 0.5, duration: 1 }}
+          >
+            Explore the wonders of our solar system with this captivating 3D
+            simulation of the planets using Three.js.
+          </motion.p>
+          <div className="flex justify-center space-x-4">
+            <button className="bg-blue-600 px-6 py-3 rounded-lg">
+              Get started
+            </button>
+            <button className="border border-white px-6 py-3 rounded-lg">
+              More
+            </button>
           </div>
-          <div className=" p-8 bg-zinc-9200 rounded-[15px] border border-zinc-700 h-full">
-            <div className="max-w-xl ">
-              <Lottie
-                animationData={animationData}
-                className=" absolute bottom-[0] left-[0rem] z-[0]"
-                loop={true}
-              />
 
-              <FeedBack />
-            </div>
+          <div className="pt-8">
+            <img src="/mockups.png" className="w-full" />
           </div>
-        </div>
-        <div className="w-full">
-          <div className="p-5 bg-zinc-9200 rounded-[15px] border border-zinc-700">
-            <div className="flex flex-col justify-between items-center gap-6">
-              <Search list={keywords} />
-            </div>
+        </section>
+
+        <section className="bg-black px-32">
+          <div className="h-screen grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+            <motion.div
+              className="py-20 rounded-lg"
+              initial="hidden"
+              animate="visible"
+              variants={fadeIn}
+              transition={{ duration: 1 }}
+            >
+              <h2 className="text-3xl font-bold mb-4">Feature 3</h2>
+              <p className="text-gray-400 text-xl mb-4">
+                Description of Feature 3. Explore the wonders of our solar
+                system with this captivating 3D simulation of the planets using
+                Three.js.
+              </p>
+            </motion.div>
+            <video
+              className="w-full rounded-3xl shadow-sm shadow-white"
+              autoPlay
+              loop
+              muted
+              playsInline
+              src="/videos/vid1.mp4"
+            />
           </div>
-        </div>
-      </section>
-    </main>
+
+          <div className="h-screen grid grid-cols-1 md:grid-cols-2 gap-6 items-center mt-10">
+            <motion.div
+              className="py-20 rounded-lg"
+              initial="hidden"
+              animate="visible"
+              variants={fadeIn}
+              transition={{ duration: 1, delay: 0.5 }}
+            >
+              <h2 className="text-3xl font-bold mb-4">Feature 3</h2>
+              <p className="text-gray-400 text-xl mb-4">
+                Description of Feature 3. Explore the wonders of our solar
+                system with this captivating 3D simulation of the planets using
+                Three.js.
+              </p>
+            </motion.div>
+            <video
+              className="w-full rounded-2xl shadow-sm shadow-white"
+              autoPlay
+              loop
+              muted
+              playsInline
+              src="/videos/vid1.mp4"
+            />
+          </div>
+
+          <div className="h-screen grid grid-cols-1 md:grid-cols-2 gap-6 items-center mt-10">
+            <motion.div
+              className="py-20 rounded-lg"
+              initial="hidden"
+              animate="visible"
+              variants={fadeIn}
+              transition={{ duration: 1, delay: 1 }}
+            >
+              <h2 className="text-3xl font-bold mb-4">Feature 3</h2>
+              <p className="text-gray-400 text-xl mb-4">
+                Description of Feature 3. Explore the wonders of our solar
+                system with this captivating 3D simulation of the planets using
+                Three.js.
+              </p>
+            </motion.div>
+            <video
+              className="w-full rounded-2xl shadow-sm shadow-white"
+              autoPlay
+              loop
+              muted
+              playsInline
+              src="/videos/vid1.mp4"
+            />
+          </div>
+        </section>
+      </main>
+    </div>
   );
-}
+};
+
+export default Home;

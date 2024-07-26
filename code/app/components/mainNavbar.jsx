@@ -1,0 +1,58 @@
+"use client";
+import React, { useState, useEffect, useCallback } from "react";
+
+const Header = () => {
+  const [isVisible, setIsVisible] = useState(true);
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handleScroll = useCallback(() => {
+    const currentScrollPos = window.pageYOffset;
+    const visible = prevScrollPos > currentScrollPos || currentScrollPos < 10;
+
+    setIsVisible(visible);
+    setPrevScrollPos(currentScrollPos);
+  }, [prevScrollPos]);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [handleScroll]);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  return (
+    <header
+      className={`w-full fixed top-0 left-0 z-50 transition-transform duration-300  ${
+        isVisible ? "translate-y-5" : "-translate-y-20"
+      }`}
+    >
+      <div className=" mx-auto flex justify-between items-center px-6 md:px-32">
+        <a className="" href="/">
+          <img src="/logo.svg" alt="logo" className="w-32 object-contain" />
+        </a>
+        <nav>
+          <ul className="flex space-x-6">
+            <li>
+              <a href="#" className="hover:underline">
+                About
+              </a>
+            </li>
+            <li>
+              <a href="/ideas" className="bg-blue-600 px-4 py-2 rounded-lg">
+                Get started
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+  );
+};
+
+export default Header;

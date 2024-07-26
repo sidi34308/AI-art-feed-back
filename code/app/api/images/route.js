@@ -8,33 +8,44 @@ const IMAGES_PER_PAGE = 10;
 
 export async function POST(request) {
   try {
-    const { prompt } = await request.json();
-    const response = await fetchImagesFromPexels(prompt);
+    const { prompt, page } = await request.json();
 
-    if (!response) {
-      return new Response(JSON.stringify({ message: "No images found" }), {
-        status: 404,
-      });
+    // Validate input
+    if (!prompt || prompt.trim() === "") {
+      return NextResponse.json(
+        { message: "Prompt is required" },
+        { status: 400 }
+      );
     }
 
-    return new Response(JSON.stringify({ images: response.photos }), {
-      status: 200,
-    });
+    // Fetch images from Pexels
+    const images = await fetchImagesFromPexels(prompt, page);
+
+    // Handle no images found
+    if (!images || images.length === 0) {
+      return NextResponse.json({ message: "No images found" }, { status: 404 });
+    }
+
+    // Return images
+    return NextResponse.json({ images }, { status: 200 });
   } catch (error) {
     console.error("Error fetching images:", error);
-    return new Response(JSON.stringify({ message: "Error fetching images" }), {
-      status: 500,
-    });
+    return NextResponse.json(
+      { message: "Error fetching images" },
+      { status: 500 }
+    );
   }
 }
 
-async function fetchImagesFromPexels(prompt) {
+// Function to fetch images from Pexels
+async function fetchImagesFromPexels(prompt, page = 1) {
   try {
     const response = await axios.get("https://api.pexels.com/v1/search", {
-      params: { query: prompt, per_page: IMAGES_PER_PAGE },
+      params: { query: prompt, per_page: IMAGES_PER_PAGE, page },
       headers: { Authorization: API_KEY },
     });
-    return response.data;
+
+    return response.data.photos; // Return the photos array
   } catch (error) {
     console.error("Error fetching from Pexels:", error);
     throw error;

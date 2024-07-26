@@ -1,25 +1,44 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { saveAs } from "file-saver-es";
+import FootBar from "../components/FooterBar";
+import Header from "../components/Header";
 
 const ImagesPage = () => {
   const [prompt, setPrompt] = useState("");
   const [images, setImages] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
 
-  const handleSearch = async () => {
+  const fetchImages = async (prompt, page) => {
+    if (!prompt || prompt.trim() === "") {
+      return;
+    }
+
     setLoading(true);
     try {
-      const response = await axios.post("/api/images", { prompt });
-      setImages(response.data.images);
+      const response = await axios.post("/api/images", { prompt, page });
+      if (response.data.images.length === 0) {
+        setHasMore(false);
+      } else {
+        setImages((prevImages) => [...prevImages, ...response.data.images]);
+      }
     } catch (error) {
       console.error("Error fetching images:", error);
       alert("Error fetching images. Please try again.");
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSearch = () => {
+    setImages([]);
+    setPage(1);
+    setHasMore(true);
+    fetchImages(prompt, 1);
   };
 
   const handleImageClick = (image) => {
@@ -42,8 +61,31 @@ const ImagesPage = () => {
     }
   };
 
+  const handleScroll = useCallback(() => {
+    if (
+      window.innerHeight + document.documentElement.scrollTop >=
+        document.documentElement.offsetHeight &&
+      hasMore &&
+      !loading
+    ) {
+      setPage((prevPage) => prevPage + 1);
+    }
+  }, [loading, hasMore]);
+
+  useEffect(() => {
+    if (prompt && page > 1) {
+      fetchImages(prompt, page);
+    }
+  }, [page]);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-black text-white p-8 mt-20">
+      <Header />
       <div className="max-w-2xl w-full mb-8">
         <h1 className="text-3xl font-bold mb-2">
           Search for Reference Images{" "}
@@ -63,28 +105,26 @@ const ImagesPage = () => {
           onClick={handleSearch}
           className="w-full bg-[#3753ba] text-white py-2 rounded-2xl hover:bg-[#22357a]"
         >
-          بحث
+          Search
         </button>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {loading ? (
-          <div className="col-span-full flex justify-center items-center">
-            <img src="/loader.svg" alt="Loading..." className="w-20" />
+        {images.map((image) => (
+          <div key={image.id} className="relative">
+            <img
+              src={image.src.large2x}
+              alt={image.alt}
+              className="w-full h-auto rounded-lg cursor-pointer"
+              onClick={() => handleImageClick(image)}
+            />
           </div>
-        ) : (
-          images.map((image) => (
-            <div key={image.id} className="relative">
-              <img
-                src={image.src.large2x}
-                alt={image.alt}
-                className="w-full h-auto rounded-lg cursor-pointer"
-                onClick={() => handleImageClick(image)}
-              />
-            </div>
-          ))
-        )}
+        ))}
       </div>
-
+      {loading && (
+        <div className="col-span-full flex justify-center items-center">
+          <img src="/loader.svg" alt="Loading..." className="w-20" />
+        </div>
+      )}
       {selectedImage && (
         <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
           <div className="relative bg-black p-4 rounded-lg">
@@ -103,11 +143,12 @@ const ImagesPage = () => {
               onClick={handleDownload}
               className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
             >
-              تنزيل
+              Download
             </button>
           </div>
         </div>
       )}
+      <FootBar />
     </div>
   );
 };

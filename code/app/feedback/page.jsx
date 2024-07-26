@@ -1,5 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
+import FootBar from "../components/FooterBar";
+import Header from "../components/Header";
 
 const FeedbackPage = () => {
   const [tags, setTags] = useState(["realistic", "simple"]);
@@ -162,7 +164,8 @@ const FeedbackPage = () => {
   );
 
   return (
-    <div className="min-h-screen mt-20 flex items-center justify-center bg-black text-white p-8">
+    <div className="min-h-screen flex items-center justify-center bg-black text-white p-8 pt-20">
+      <Header />
       <div className="max-w-2xl w-full">
         <h1 className="text-3xl font-bold mb-2 flex gap-2">
           Feedback <span className="text-[#5b7cf5]">using AI</span>
@@ -313,6 +316,7 @@ const FeedbackPage = () => {
         )}
         <div className="h-40 w-full"></div>
       </div>
+      <FootBar />
     </div>
   );
 };

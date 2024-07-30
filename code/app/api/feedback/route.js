@@ -8,14 +8,14 @@ const genAI = new GoogleGenerativeAI(API_KEY);
 const model = genAI.getGenerativeModel({ model: MODEL_NAME });
 
 const prompt = `
-  You are an AI art critic. You will be provided with an image and a set of tags describing what type of art I was going for. Your task is to analyze the artwork based on the given tags and provide detailed feedback highlighting the strengths and areas for improvement. 
+  You are an art critic. You will be provided with an image and a set of tags describing the artistic intent. Your task is to analyze the artwork based on the given tags and provide constructive feedback. Speak directly to the artist, and avoid being overly formal. Please format your feedback as follows:
 Please provide your feedback in the following format make it short as a paragraph:
    Provide a brief overview of your overall impression of the artwork,
    List and describe the strengths of the artwork based on the provided tags,
    List and describe areas where the artwork could be improved,
    Provide specific suggestions or techniques the artist can use to enhance their artwork,
 
-Make sure your feedback is constructive, detailed, and encourages the artist to improve,
+  Ensure your feedback is constructive, detailed, and encourages the artist to improve while keeping it short and impactful.
 
 
 `;

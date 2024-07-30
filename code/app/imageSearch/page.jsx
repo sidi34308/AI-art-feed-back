@@ -4,6 +4,7 @@ import axios from "axios";
 import { saveAs } from "file-saver-es";
 import FootBar from "../components/FooterBar";
 import Header from "../components/Header";
+import { FaSearch } from "react-icons/fa"; // Importing the search icon
 
 const ImagesPage = () => {
   const [prompt, setPrompt] = useState("");
@@ -84,26 +85,28 @@ const ImagesPage = () => {
   }, [handleScroll]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-black text-white p-8 mt-20">
+    <div className="min-h-screen flex flex-col items-center justify-start bg-black text-white p-8 mt-40">
       <Header />
       <div className="max-w-2xl w-full mb-8">
         <h1 className="text-3xl font-bold mb-2">
-          Search for Reference Images{" "}
-          <span className="text-blue-500">Using AI</span>
+          Search for <span className="text-[#5b7cf5]">Reference Images</span>
         </h1>
-
         <p className="mb-6">Get reference images for your upcoming artwork.</p>
-        <input
-          type="text"
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-          placeholder="Enter a description to get reference images"
-          className="w-full border-[1px] border-[#323232] bg-[#242424] text-white p-4 rounded-2xl mb-4"
-        />
-
+        <div className="px-4 flex items-center border-[1px] border-[#323232] bg-[#242424] rounded-2xl mb-4 p-">
+          <FaSearch className="text-gray-400 " />
+          <input
+            type="text"
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
+            placeholder="Enter a description to get reference images"
+            className="w-full bg-transparent text-white p-4 rounded-2xl outline-none"
+          />
+        </div>
         <button
           onClick={handleSearch}
+          disabled={!prompt.trim()}
           className="w-full bg-[#3753ba] text-white py-2 rounded-2xl hover:bg-[#22357a]"
+          style={{ opacity: !prompt.trim() ? 0.5 : 1 }}
         >
           Search
         </button>
@@ -114,7 +117,7 @@ const ImagesPage = () => {
             <img
               src={image.src.large2x}
               alt={image.alt}
-              className="w-full h-auto rounded-lg cursor-pointer"
+              className="w-full h-auto rounded-lg cursor-pointer object-cover"
               onClick={() => handleImageClick(image)}
             />
           </div>
@@ -141,7 +144,7 @@ const ImagesPage = () => {
             />
             <button
               onClick={handleDownload}
-              className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+              className="w-full bg-[#5b7cf5] text-white py-2 px-4 rounded-lg hover:bg-blue-600"
             >
               Download
             </button>

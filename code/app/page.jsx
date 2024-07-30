@@ -33,7 +33,8 @@ const Home = () => {
             variants={fadeIn}
             transition={{ duration: 1 }}
           >
-            Let’s generate ideas <span className="text-blue-600">using AI</span>
+            {`Let’s generate ideas`}{" "}
+            <span className="text-blue-600">using AI</span>
           </motion.h1>
           <motion.p
             className="text-md md:text-xl mb-12"

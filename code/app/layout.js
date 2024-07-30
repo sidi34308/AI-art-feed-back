@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <Head>
-        <title>Artist's AI - Landing Page</title>
+        <title>Artist&apos;s AI</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></Script>

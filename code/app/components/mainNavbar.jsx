@@ -34,7 +34,7 @@ const Header = () => {
     >
       <div className=" mx-auto flex justify-between items-center px-6 md:px-32">
         <a className="" href="/">
-          <img src="/logo.svg" alt="logo" className="w-32 object-contain" />
+          <img src="/logo2.svg" alt="logo" className="w-32 object-contain" />
         </a>
         <nav>
           <ul className="flex space-x-6">
@@ -44,7 +44,10 @@ const Header = () => {
               </a>
             </li>
             <li>
-              <a href="/ideas" className="bg-blue-600 px-4 py-2 rounded-lg">
+              <a
+                href="/ideas"
+                className="text-white hover:bg-[#304eb9] bg-[#4369f5] px-4 py-2 rounded-xl"
+              >
                 Get started
               </a>
             </li>

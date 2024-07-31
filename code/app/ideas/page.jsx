@@ -60,9 +60,9 @@ const IdeaPage = () => {
   };
 
   return (
-    <section className="w-full flex flex-col justify-center items-center h-auto bg-black text-white mt-20 mb-32">
+    <section className="w-full flex flex-col justify-center items-center h-auto bg-black text-white">
       <Header />
-      <div className="p-8 rounded-lg shadow-lg max-w-5xl w-full">
+      <div className="p-8 rounded-lg shadow-lg max-w-5xl w-full mt-20 mb-32">
         <div className="flex flex-col justify-center gap-6">
           <div>
             <h1 className="text-2xl flex sm:text-3xl font-bold gap-2">
@@ -102,7 +102,7 @@ const IdeaPage = () => {
           />
 
           <button
-            className="py-3 px-6 flex gap-2 items-center justify-center bg-blue-500 rounded-lg text-white font-bold hover:bg-blue-600 transition duration-300 ease-in-out cssbuttons-io"
+            className="py-3 px-6 flex gap-2 items-center justify-center bg-[#5b7cf5] rounded-lg text-white font-bold hover:bg-blue-600 transition duration-300 ease-in-out cssbuttons-io"
             onClick={fetchIdea}
             disabled={loading} // Disable the button when loading is true
           >

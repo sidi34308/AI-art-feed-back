@@ -22,10 +22,10 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black to-gray-900 text-white">
+    <div className=" bg-gradient-to-b from-black to-gray-900 text-black">
       <MainNavbar />
-      <main className="mt-20">
-        <section className="text-center px-20 pt-20">
+      <main className="bg-[#fff] pt-20">
+        <section className=" flex flex-col justify-center items-center text-left sm:text-center px-6 md:px-20 pt-20">
           <motion.h1
             className="text-3xl md:text-5xl font-bold mb-5"
             initial="hidden"
@@ -33,26 +33,32 @@ const Home = () => {
             variants={fadeIn}
             transition={{ duration: 1 }}
           >
-            Let&apos;s generate ideas{" "}
-            <span className="text-blue-600">using AI</span>
+            Unleash Your Creativity with{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3149a1] to-[#4a6ce6]">
+              Artist's AI
+            </span>
           </motion.h1>
           <motion.p
-            className="text-md md:text-xl mb-12"
+            className="text-md md:text-md mb-12 max-w-xl"
             initial="hidden"
             animate="visible"
             variants={fadeIn}
             transition={{ delay: 0.5, duration: 1 }}
           >
-            Explore the wonders of our solar system with this captivating 3D
-            simulation of the planets using Three.js.
+            AI is your creative partner. Artist's AI offers feedback, reference
+            images, and fresh ideas to assist you at every stage of your
+            artistic journey.
           </motion.p>
-          <div className="flex justify-center space-x-4">
-            <button className="bg-blue-600 px-6 py-3 rounded-lg">
+          <div className="flex  justify-start sm:justify-center space-x-4">
+            <a
+              href="/ideas"
+              className="text-white bg-[#2B45A3] px-4 py-2 md:px-6 md:py-3 rounded-2xl transition duration-300 ease-in-out hover:bg-[#3656c2]"
+            >
               Get started
-            </button>
-            <button className="border border-white px-6 py-3 rounded-lg">
-              More
-            </button>
+            </a>
+            <a className="border border-white px-4 py-2 md:px-6 md:py-3 rounded-2xl transition duration-300 ease-in-out hover:bg-white hover:text-black cursor-pointer">
+              Learn more
+            </a>
           </div>
 
           <div className="pt-8">
@@ -60,21 +66,31 @@ const Home = () => {
           </div>
         </section>
 
-        <section className="bg-black px-32">
-          <div className="h-screen grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+        <section className="text-white bg-black px-6 md:px-32 more">
+          <div className="h-full md:h-screen grid grid-cols-1 md:grid-cols-2 gap-6 items-center ">
             <motion.div
-              className="py-20 rounded-lg"
+              className="py-10 md:py-20 rounded-2xl"
               initial="hidden"
               animate="visible"
               variants={fadeIn}
               transition={{ duration: 1 }}
             >
-              <h2 className="text-3xl font-bold mb-4">Feature 3</h2>
-              <p className="text-gray-400 text-xl mb-4">
-                Description of Feature 3. Explore the wonders of our solar
-                system with this captivating 3D simulation of the planets using
-                Three.js.
+              <h2 className="text-2xl md:text-3xl font-bold mb-4">
+                Get Feedback on Your Artwork
+              </h2>
+              <p className="paragraph text-gray-400 text-md md:text-md mb-6">
+                Receive insightful feedback from our advanced AI model tailored
+                to improve your artistic skills. Upload your artwork and let our
+                AI analyze and provide constructive comments to help you refine
+                and perfect your work. Discover new perspectives and elevate
+                your art to the next level.
               </p>
+              <a
+                href="/feedback"
+                className="bg-[#2B45A3] px-4 py-2 md:px-6 md:py-3 rounded-2xl transition duration-300 ease-in-out hover:bg-[#3656c2]"
+              >
+                Try it now
+              </a>
             </motion.div>
             <video
               className="w-full rounded-3xl shadow-sm shadow-white"
@@ -86,20 +102,30 @@ const Home = () => {
             />
           </div>
 
-          <div className="h-screen grid grid-cols-1 md:grid-cols-2 gap-6 items-center mt-10">
+          <div className="h-full md:h-screen grid grid-cols-1 md:grid-cols-2 gap-6 items-center mt-10">
             <motion.div
-              className="py-20 rounded-lg"
+              className="py-10 md:py-20 rounded-2xl"
               initial="hidden"
               animate="visible"
               variants={fadeIn}
               transition={{ duration: 1, delay: 0.5 }}
             >
-              <h2 className="text-3xl font-bold mb-4">Feature 3</h2>
-              <p className="text-gray-400 text-xl mb-4">
-                Description of Feature 3. Explore the wonders of our solar
-                system with this captivating 3D simulation of the planets using
-                Three.js.
+              <h2 className="text-2xl md:text-3xl font-bold mb-4">
+                Find Perfect Reference Images
+              </h2>
+              <p className="paragraph text-gray-400 text-md md:text-md mb-6">
+                Need inspiration or a specific reference image for your project?
+                Our AI-powered image search feature connects you with a vast
+                library of high-quality images. Use the intuitive search tool to
+                find the perfect reference that fits your vision. Say goodbye to
+                endless scrolling and find exactly what you need in seconds.
               </p>
+              <a
+                href="/imageSearch"
+                className="bg-[#2B45A3] px-4 py-2 md:px-6 md:py-3 rounded-2xl transition duration-300 ease-in-out hover:bg-[#3656c2]"
+              >
+                Start your search
+              </a>
             </motion.div>
             <video
               className="w-full rounded-2xl shadow-sm shadow-white"
@@ -111,20 +137,30 @@ const Home = () => {
             />
           </div>
 
-          <div className="h-screen grid grid-cols-1 md:grid-cols-2 gap-6 items-center mt-10">
+          <div className="h-full md:h-screen grid grid-cols-1 md:grid-cols-2 gap-6 items-center mt-10">
             <motion.div
-              className="py-20 rounded-lg"
+              className="py-10 md:py-20 rounded-2xl"
               initial="hidden"
               animate="visible"
               variants={fadeIn}
               transition={{ duration: 1, delay: 1 }}
             >
-              <h2 className="text-3xl font-bold mb-4">Feature 3</h2>
-              <p className="text-gray-400 text-xl mb-4">
-                Description of Feature 3. Explore the wonders of our solar
-                system with this captivating 3D simulation of the planets using
-                Three.js.
+              <h2 className="text-2xl md:text-3xl font-bold mb-4">
+                Generate Creative Ideas
+              </h2>
+              <p className="paragraph text-gray-400 text-md md:text-md mb-6">
+                Stuck in a creative rut? Our idea generator is designed to spark
+                your imagination and kickstart your next project. Choose your
+                field of art, select a famous person for inspiration, or provide
+                keywords to generate unique and exciting ideas tailored to your
+                preferences. Let our AI inspire your next great piece of art.
               </p>
+              <a
+                href="/ideas"
+                className="bg-[#2B45A3] px-4 py-2 md:px-6 md:py-3 rounded-2xl transition duration-300 ease-in-out hover:bg-[#3656c2]"
+              >
+                Get inspired
+              </a>
             </motion.div>
             <video
               className="w-full rounded-2xl shadow-sm shadow-white"

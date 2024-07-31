@@ -143,3 +143,6 @@ body {
 .cssbuttons-io:active {
   transform: scale(0.95);
 }
+.backgoundimage {
+  background-image: url("/background.png");
+}

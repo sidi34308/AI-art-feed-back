@@ -85,9 +85,9 @@ const ImagesPage = () => {
   }, [handleScroll]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start bg-black text-white p-8 mt-40">
+    <div className=" flex flex-col items-center justify-start bg-black text-white p-8 ">
       <Header />
-      <div className="max-w-2xl w-full mb-8">
+      <div className="max-w-2xl w-full mb-8 mt-40">
         <h1 className="text-3xl font-bold mb-2">
           Search for <span className="text-[#5b7cf5]">Reference Images</span>
         </h1>

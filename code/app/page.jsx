@@ -35,7 +35,7 @@ const Home = () => {
           >
             Unleash Your Creativity with{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3149a1] to-[#4a6ce6]">
-              Artist's AI
+              Artist&apos;s AI
             </span>
           </motion.h1>
           <motion.p
@@ -45,9 +45,9 @@ const Home = () => {
             variants={fadeIn}
             transition={{ delay: 0.5, duration: 1 }}
           >
-            AI is your creative partner. Artist's AI offers feedback, reference
-            images, and fresh ideas to assist you at every stage of your
-            artistic journey.
+            AI is your creative partner. Artist&apos;s AI offers feedback,
+            reference images, and fresh ideas to assist you at every stage of
+            your artistic journey.
           </motion.p>
           <div className="flex  justify-start sm:justify-center space-x-4">
             <a

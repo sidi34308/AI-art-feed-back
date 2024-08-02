@@ -52,7 +52,7 @@ const IdeaPage = () => {
     const interval = setInterval(() => {
       setIdea((prev) => prev + text[index]);
       index++;
-      if (index === text.length) {
+      if (index === text.length - 1) {
         clearInterval(interval);
         setLoading(false); // Set loading to false after displaying the idea
       }

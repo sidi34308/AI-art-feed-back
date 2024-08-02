@@ -102,8 +102,9 @@ const FeedbackPage = () => {
     const interval = setInterval(() => {
       setFeedback((prev) => prev + text[index - 1]);
       index++;
-      if (index === text.length) {
+      if (index === text.length - 1) {
         clearInterval(interval);
+        setLoading(false); // Set loading to false after displaying the idea
       }
     }, 50); // Adjust the interval duration as needed
   };

@@ -24,7 +24,7 @@ const Home = () => {
   return (
     <div className=" bg-gradient-to-b from-black to-gray-900 text-black">
       <MainNavbar />
-      <main className="bg-[#fff] pt-20">
+      <main className="bg-[#F0F0F0] pt-20">
         <section className=" flex flex-col justify-center items-center text-left sm:text-center px-6 md:px-20 pt-20">
           <motion.h1
             className="text-3xl md:text-5xl font-bold mb-5"
@@ -56,13 +56,13 @@ const Home = () => {
             >
               Get started
             </a>
-            <a className="border border-white px-4 py-2 md:px-6 md:py-3 rounded-2xl transition duration-300 ease-in-out hover:bg-white hover:text-black cursor-pointer">
+            <a className="border border-white bg-[#fcfcfc] px-4 py-2 md:px-6 md:py-3 rounded-2xl transition duration-300 ease-in-out hover:bg-white hover:text-black cursor-pointer">
               Learn more
             </a>
           </div>
 
-          <div className="pt-8">
-            <img src="/mockups.png" className="w-full" />
+          <div className="pt-3">
+            <img src="/mockup.png" className="w-full" />
           </div>
         </section>
 

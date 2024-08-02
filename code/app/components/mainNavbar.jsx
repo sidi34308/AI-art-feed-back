@@ -39,14 +39,19 @@ const Header = () => {
         <nav>
           <ul className="flex space-x-6">
             <li>
-              <a href="#" className="hover:underline">
-                About
+              <a
+                href="https://github.com/sidi34308"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline"
+              >
+                github
               </a>
             </li>
             <li>
               <a
                 href="/ideas"
-                className="text-white hover:bg-[#304eb9] bg-[#4369f5] px-4 py-2 rounded-xl"
+                className="text-white hover:bg-[#3555c7] bg-[#2B45A3] px-4 py-2 rounded-xl"
               >
                 Get started
               </a>

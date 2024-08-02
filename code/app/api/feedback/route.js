@@ -33,6 +33,7 @@ export async function POST(req, res) {
 
     // Example usage with Google Generative AI (replace with actual implementation)
     // const aiFeedback = await generateFeedback(prompt);
+    console.log(text);
     return new Response(JSON.stringify({ feedback: text }), {
       status: 200,
     });

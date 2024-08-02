@@ -94,19 +94,20 @@ const FeedbackPage = () => {
       event.target.value = null;
     }
   };
-  const displayFeedback = (text) => {
+  const displayFeedback = async (text) => {
     if (!text) return;
 
     let index = 0;
     setFeedback(""); // Reset before displaying new one
     const interval = setInterval(() => {
-      setFeedback((prev) => prev + text[index - 1]);
+      // Append the next character and ensure spaces are handled
+      setFeedback((prev) => prev + text.charAt(index));
       index++;
-      if (index === text.length - 1) {
+      if (index === text.length) {
         clearInterval(interval);
         setLoading(false); // Set loading to false after displaying the idea
       }
-    }, 50); // Adjust the interval duration as needed
+    }, 100); // Adjust the interval duration as needed
   };
 
   const handleSubmit = async () => {
@@ -129,7 +130,7 @@ const FeedbackPage = () => {
       }
 
       const result = await response.json();
-      displayFeedback(result.feedback);
+      await displayFeedback(result.feedback);
     } catch (error) {
       console.error("Error fetching feedback:", error);
       alert("Error fetching feedback. Please try again.");
@@ -172,7 +173,6 @@ const FeedbackPage = () => {
           your strengths and areas for improvement.
         </p>
         <p className="mb-6"> Upload your artwork</p>
-
         <div
           className="border-2 border-dashed border-[#474747] rounded-lg p-8 py-16 mb-4 flex flex-col items-center hover:bg-[#0c0c0c] cursor-pointer"
           onClick={() => document.getElementById("fileInput").click()}
@@ -274,7 +274,7 @@ const FeedbackPage = () => {
             imageFile ? "cssbuttons-io" : "opacity-35"
           }  text-white py-3 w-full flex  justify-center gap-2 rounded-xl hover:bg-opacity-80 transition duration-300 `}
           onClick={handleSubmit}
-          disabled={!imageFile}
+          disabled={!imageFile && loading}
         >
           <span className="flex justify-center items-center">
             Get Feed-back
@@ -302,26 +302,24 @@ const FeedbackPage = () => {
           </span>
         </button>
 
-        {feedback && (
-          <div className="mt-6 rounded-lg p-4">
-            <h2 className="text-xl font-bold mb-2 flex justify-center items-center">
-              AI Feedback
-            </h2>
-            {loading ? (
-              <div className="flex justify-center items-center mt-6">
-                <div className="w-full bg-[#2e2e2e] animate-pulse h-20 rounded-xl min-h-20">
-                  {/* Skeleton effect: background color and pulse animation */}
-                </div>
+        <div className="mt-6 rounded-lg p-4">
+          <h2 className="text-xl font-bold mb-2 flex justify-center items-center">
+            AI Feedback
+          </h2>
+          {loading ? (
+            <div className="flex justify-center items-center mt-6">
+              <div className="w-full bg-[#2e2e2e] animate-pulse h-20 rounded-xl min-h-20">
+                {/* Skeleton effect: background color and pulse animation */}
               </div>
-            ) : (
-              <p className="flex items-center">
-                <span className="inline-flex w-full items-center bg-[#181818] p-4 rounded-xl">
-                  <span className="ml-2">{feedback}</span>
-                </span>
-              </p>
-            )}
-          </div>
-        )}
+            </div>
+          ) : (
+            <p className="flex items-center">
+              <span className="inline-flex w-full items-center bg-[#181818] p-4 rounded-xl">
+                <span className="ml-2">{feedback}</span>
+              </span>
+            </p>
+          )}
+        </div>
         <div className="h-40 w-full"></div>
       </div>
       <FootBar />

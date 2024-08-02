@@ -1,10 +1,10 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
-import { saveAs } from "file-saver-es";
+import { saveAs } from "file-saver";
 import FootBar from "../components/FooterBar";
 import Header from "../components/Header";
-import { FaSearch } from "react-icons/fa"; // Importing the search icon
+import { FaSearch } from "react-icons/fa";
 
 const ImagesPage = () => {
   const [prompt, setPrompt] = useState("");
@@ -43,7 +43,7 @@ const ImagesPage = () => {
   };
 
   const handleImageClick = (image) => {
-    setSelectedImage(image.src.large2x); // Adjust based on the structure of the image object
+    setSelectedImage(image.src.large2x);
   };
 
   const handleDownload = () => {
@@ -51,7 +51,7 @@ const ImagesPage = () => {
       fetch(selectedImage)
         .then((response) => response.blob())
         .then((blob) => {
-          saveAs(blob, "downloaded_image.jpg"); // Use a dynamic name if needed
+          saveAs(blob, "downloaded_image.jpg");
         })
         .catch((error) => {
           console.error("Error downloading image:", error);
@@ -85,15 +85,15 @@ const ImagesPage = () => {
   }, [handleScroll]);
 
   return (
-    <div className=" flex flex-col items-center justify-start bg-black h-full text-white p-8 ">
+    <div className="flex flex-col items-center justify-start bg-black min-h-screen text-white p-8">
       <Header />
-      <div className=" max-w-2xl w-full mb-8 mt-40">
+      <div className="max-w-2xl w-full mb-8 mt-40">
         <h1 className="text-3xl font-bold mb-2">
           Search for <span className="text-[#5b7cf5]">Reference Images</span>
         </h1>
         <p className="mb-6">Get reference images for your upcoming artwork.</p>
         <div className="px-4 flex items-center border-[1px] border-[#323232] bg-[#242424] rounded-2xl mb-4 p-">
-          <FaSearch className="text-gray-400 " />
+          <FaSearch className="text-gray-400" />
           <input
             type="text"
             value={prompt}
@@ -111,13 +111,13 @@ const ImagesPage = () => {
           Search
         </button>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 w-full max-w-6xl mx-auto">
         {images.map((image) => (
           <div key={image.id} className="relative">
             <img
               src={image.src.large2x}
               alt={image.alt}
-              className="w-full h-auto rounded-lg cursor-pointer object-cover"
+              className="w-full h-full rounded-lg cursor-pointer object-cover"
               onClick={() => handleImageClick(image)}
             />
           </div>

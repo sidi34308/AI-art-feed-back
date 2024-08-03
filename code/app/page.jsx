@@ -1,5 +1,5 @@
 "use client";
-
+import Footer from "./components/footer";
 import Head from "next/head";
 import { useEffect, useRef } from "react";
 import MainNavbar from "./components/mainNavbar";
@@ -56,7 +56,10 @@ const Home = () => {
             >
               Get started
             </a>
-            <a className="border border-white bg-[#fcfcfc] px-4 py-2 md:px-6 md:py-3 rounded-2xl transition duration-300 ease-in-out hover:bg-white hover:text-black cursor-pointer">
+            <a
+              href="#readmore"
+              className="border border-white bg-[#fcfcfc] px-4 py-2 md:px-6 md:py-3 rounded-2xl transition duration-300 ease-in-out hover:bg-white hover:text-black cursor-pointer"
+            >
               Learn more
             </a>
           </div>
@@ -66,7 +69,10 @@ const Home = () => {
           </div>
         </section>
 
-        <section className="text-white bg-black px-6 md:px-32 more">
+        <section
+          id="readmore"
+          className="text-white bg-black px-6 md:px-32 more"
+        >
           <div className="h-full md:h-screen grid grid-cols-1 md:grid-cols-2 gap-6 items-center ">
             <motion.div
               className="py-10 md:py-20 rounded-2xl"
@@ -173,6 +179,7 @@ const Home = () => {
           </div>
         </section>
       </main>
+      <Footer />
     </div>
   );
 };

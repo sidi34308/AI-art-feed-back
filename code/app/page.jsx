@@ -98,7 +98,7 @@ const Home = () => {
               loop
               muted
               playsInline
-              src="/videos/vid1.mp4"
+              src="/videos/video1.mp4"
             />
           </div>
 
@@ -133,7 +133,7 @@ const Home = () => {
               loop
               muted
               playsInline
-              src="/videos/vid1.mp4"
+              src="/videos/video3.mp4"
             />
           </div>
 
@@ -168,7 +168,7 @@ const Home = () => {
               loop
               muted
               playsInline
-              src="/videos/vid1.mp4"
+              src="/videos/video2.mp4"
             />
           </div>
         </section>

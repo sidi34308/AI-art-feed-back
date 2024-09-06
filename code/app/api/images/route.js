@@ -5,6 +5,36 @@ import axios from "axios";
 
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY_PEXELS; // Replace with your Pexels API key
 const IMAGES_PER_PAGE = 10;
+async function translatePrompt(prompt, retries = 3) {
+  for (let i = 0; i < retries; i++) {
+    try {
+      const response = await axios.post(
+        "https://libretranslate.de/translate",
+        {
+          q: prompt,
+          source: "ar",
+          target: "en",
+          format: "text",
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      return response.data.translatedText;
+    } catch (error) {
+      if (i === retries - 1) {
+        // Final attempt failed, throw an error
+        console.error("Translation failed after retries:", error);
+        throw new Error("Translation failed after multiple attempts.");
+      }
+      // Wait before retrying (exponential backoff)
+      await new Promise((res) => setTimeout(res, 1000 * Math.pow(2, i)));
+    }
+  }
+}
 
 export async function POST(request) {
   try {
@@ -18,8 +48,17 @@ export async function POST(request) {
       );
     }
 
-    // Fetch images from Pexels
-    const images = await fetchImagesFromPexels(prompt, page);
+    // Detect Arabic input and translate if needed
+    const arabicRegex = /[\u0600-\u06FF]/; // Regex to detect Arabic characters
+    let finalPrompt = prompt;
+
+    if (arabicRegex.test(prompt)) {
+      finalPrompt = await translatePrompt(prompt); // Translate if Arabic
+      console.log("Translated prompt:", finalPrompt);
+    }
+
+    // Fetch images using the translated (or original) prompt
+    const images = await fetchImagesFromPexels(finalPrompt, page);
 
     // Handle no images found
     if (!images || images.length === 0) {
@@ -36,7 +75,6 @@ export async function POST(request) {
     );
   }
 }
-
 // Function to fetch images from Pexels
 async function fetchImagesFromPexels(prompt, page = 1) {
   try {

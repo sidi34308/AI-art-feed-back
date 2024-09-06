@@ -16,7 +16,10 @@ const ImagesPage = () => {
 
   const fetchImages = async (prompt, page) => {
     if (!prompt || prompt.trim() === "") {
-      return;
+      return NextResponse.json(
+        { message: "Prompt is required" },
+        { status: 400 }
+      );
     }
 
     setLoading(true);
@@ -99,6 +102,7 @@ const ImagesPage = () => {
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="Enter a description to get reference images"
+            dir={/[\u0600-\u06FF]/.test(prompt) ? "rtl" : "ltr"} // Detect Arabic characters
             className="w-full bg-transparent text-white p-4 rounded-2xl outline-none"
           />
         </div>

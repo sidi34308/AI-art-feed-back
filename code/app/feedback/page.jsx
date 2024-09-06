@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import FootBar from "../components/FooterBar";
 import Header from "../components/Header";
+import Typewriter from "../components/Typewriter";
 
 const FeedbackPage = () => {
   const [tags, setTags] = useState(["realistic", "simple"]);
@@ -68,9 +69,7 @@ const FeedbackPage = () => {
     const selectedFile = event.dataTransfer.files[0];
     const allowedTypes = ["image/jpeg", "image/png", "image/jpg", "image/webp"];
     if (selectedFile && allowedTypes.includes(selectedFile.type)) {
-      setFile(selectedFile);
-    } else {
-      alert("Please select a valid image file");
+      setImageFile(selectedFile); // Updated
     }
   };
 
@@ -96,18 +95,9 @@ const FeedbackPage = () => {
   };
   const displayFeedback = async (text) => {
     if (!text) return;
-
     let index = 0;
-    setFeedback(""); // Reset before displaying new one
-    const interval = setInterval(() => {
-      // Append the next character and ensure spaces are handled
-      setFeedback((prev) => prev + text.charAt(index));
-      index++;
-      if (index === text.length) {
-        clearInterval(interval);
-        setLoading(false); // Set loading to false after displaying the idea
-      }
-    }, 100); // Adjust the interval duration as needed
+    setFeedback(""); // Clear feedback before displaying new one
+    setFeedback(text); // Clear feedback before displaying new one
   };
 
   const handleSubmit = async () => {
@@ -210,9 +200,7 @@ const FeedbackPage = () => {
                   <path d="M44 27.5V34.8333C44 39.8878 39.8878 44 34.8333 44H9.16667C4.11217 44 0 39.8878 0 34.8333V27.5C0 24.4677 2.46767 22 5.5 22H11C13.0222 22 14.6667 23.6445 14.6667 25.6667C14.6667 27.6888 16.3112 29.3333 18.3333 29.3333H25.6667C27.6888 29.3333 29.3333 27.6888 29.3333 25.6667C29.3333 23.6445 30.9778 22 33 22H38.5C41.5323 22 44 24.4677 44 27.5ZM15.9628 9.70383L20.1667 5.5V18.3333C20.1667 19.3472 20.9862 20.1667 22 20.1667C23.0138 20.1667 23.8333 19.3472 23.8333 18.3333V5.5L28.0372 9.70383C28.3947 10.0613 28.864 10.241 29.3333 10.241C29.8027 10.241 30.272 10.0613 30.6295 9.70383C31.3463 8.987 31.3463 7.82833 30.6295 7.1115L24.5923 1.07433C23.8847 0.366667 22.9552 0.011 22.0257 0.0055L22 0L21.9743 0.0055C21.043 0.011 20.1153 0.366667 19.4077 1.07433L13.3705 7.1115C12.6537 7.82833 12.6537 8.987 13.3705 9.70383C14.0873 10.4207 15.246 10.4207 15.9628 9.70383Z" />
                 </g>
                 <defs>
-                  <clipPath id="clip0_358_304">
-                    <rect width="44" height="44" />
-                  </clipPath>
+                  <rect width="44" height="44" />
                 </defs>
               </svg>
               <p className="text-sm">
@@ -274,7 +262,7 @@ const FeedbackPage = () => {
             imageFile ? "cssbuttons-io" : "opacity-35"
           }  text-white py-3 w-full flex  justify-center gap-2 rounded-xl hover:bg-opacity-80 transition duration-300 `}
           onClick={handleSubmit}
-          disabled={!imageFile && loading}
+          disabled={!imageFile || loading}
         >
           <span className="flex justify-center items-center">
             Get Feed-back
@@ -315,7 +303,7 @@ const FeedbackPage = () => {
           ) : (
             <p className="flex items-center">
               <span className="inline-flex w-full items-center bg-[#181818] p-4 rounded-xl">
-                <span className="ml-2">{feedback}</span>
+                <Typewriter text={feedback} delay={70} />
               </span>
             </p>
           )}

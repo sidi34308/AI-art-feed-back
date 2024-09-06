@@ -16,7 +16,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className=" bg-[#121212] text-white py-4">
+    <footer className=" bg-[#121212] text-white py-4 ">
       <div className="flex justify-around gap-10 mx-auto text-center">
         <div className="mb-2 flex items-center justify-center">
           <span> {email} </span>
@@ -34,7 +34,7 @@ const Footer = () => {
             rel="noopener noreferrer"
             className="text-blue-400 hover:text-blue-600"
           >
-            <FontAwesomeIcon icon={faLinkedin} size="2x" />
+            <FontAwesomeIcon icon={faLinkedin} size="2x" className="w-6" />
           </a>
         </div>
       </div>

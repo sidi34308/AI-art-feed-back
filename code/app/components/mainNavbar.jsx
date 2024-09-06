@@ -45,7 +45,7 @@ const Header = () => {
                 rel="noopener noreferrer"
                 className="hover:underline"
               >
-                github
+                Github
               </a>
             </li>
             <li>

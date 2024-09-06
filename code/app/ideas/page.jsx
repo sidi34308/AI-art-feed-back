@@ -104,7 +104,8 @@ const IdeaPage = () => {
           <button
             className="py-3 px-6 flex gap-2 items-center justify-center bg-[#5b7cf5] rounded-lg text-white font-bold hover:bg-blue-600 transition duration-300 ease-in-out cssbuttons-io"
             onClick={fetchIdea}
-            disabled={loading} // Disable the button when loading is true
+            disabled={loading}
+             // Disable the button when loading is true
           >
             <span>
               Suggest an Idea

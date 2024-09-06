@@ -169,7 +169,7 @@ const Home = () => {
               </a>
             </motion.div>
             <video
-              className="w-full rounded-2xl shadow-sm shadow-white pb-10"
+              className="w-full rounded-2xl shadow-sm shadow-white pb-10 mb-10"
               autoPlay
               loop
               muted

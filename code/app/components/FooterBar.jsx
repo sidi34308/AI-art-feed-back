@@ -12,7 +12,7 @@ const FootBar = () => {
     return pathname === `${value}` ? "text-[#5A79E4]" : "text-[#6E6E6E]"; // Adjust colors as per your design
   };
   return (
-    <div className="fixed sm: bottom-0 left-0 right-0 bg-[#090909] m-3 rounded-2xl">
+    <div className="fixed sm: bottom-0 left-0 right-0 bg-[#090909] m-3 rounded-2xl z-10">
       <div className="flex justify-center sm:gap-5 py-4 font-semibold">
         <a
           className={`hover p-2  hover:bg-[#2a2a2a] rounded-xl ${isActive(
